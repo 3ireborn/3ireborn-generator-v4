@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Generator Istikmal Syariah V4</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#061b18;
+    color:white;
+    padding:20px;
+}
+
+.box{
+    max-width:600px;
+    margin:auto;
+}
+
+h1{
+    text-align:center;
+    color:#d4af37;
+}
+
+input,textarea{
+    width:100%;
+    padding:14px;
+    margin:8px 0;
+    border-radius:10px;
+    border:none;
+    font-size:16px;
+}
+
+button{
+    width:100%;
+    padding:15px;
+    margin-top:10px;
+    border:none;
+    border-radius:12px;
+    background:#d4af37;
+    font-weight:bold;
+    font-size:16px;
+}
+
+.result{
+    background:#102d28;
+    padding:15px;
+    border-radius:12px;
+    margin-top:20px;
+    word-wrap:break-word;
+}
+
+.link{
+    color:#00ffcc;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<h1>
+ISTIKMAL SYARIAH<br>
+GENERATOR V4
+</h1>
+
+
+<label>Nama Leader</label>
+<input id="nama"
+placeholder="Contoh: Sugiarto Kurniawan">
+
+
+<label>No WhatsApp</label>
+<input id="wa"
+placeholder="6282240001731">
+
+
+<label>Slug Branding</label>
+<input id="slug"
+placeholder="NganggurAjaBisa">
+
+
+<button onclick="generate()">
+🚀 GENERATE LINK
+</button>
+
+
+<div class="result">
+
+<h3>LP MASTER</h3>
+<p id="master" class="link"></p>
+<button onclick="copy('master')">
+Copy LP Master
+</button>
+
+
+<h3>LP HOT</h3>
+<p id="hot" class="link"></p>
+<button onclick="copy('hot')">
+Copy LP Hot
+</button>
+
+
+<h3>FORM PENDAFTARAN</h3>
+<p id="form" class="link"></p>
+<button onclick="copy('form')">
+Copy Form
+</button>
+
+
+</div>
+
+</div>
+
+
+<script>
+
+function generate(){
+
+let nama =
+document.getElementById("nama").value;
+
+let wa =
+document.getElementById("wa").value;
+
+let slug =
+document.getElementById("slug").value;
+
+
+let param =
+"?name="+encodeURIComponent(nama)+
+"&wa="+wa+
+"&slug="+encodeURIComponent(slug);
+
+
+let domain =
+"https://3ireborn.github.io/pendaftaran-online/";
+
+
+document.getElementById("master").innerText =
+domain+"lp-master-v4.html"+param;
+
+
+document.getElementById("hot").innerText =
+domain+"lp-hot-v4.html"+param;
+
+
+document.getElementById("form").innerText =
+domain+"form-pendaftaran-v4.html"+param;
+
+}
+
+
+function copy(id){
+
+let text =
+document.getElementById(id).innerText;
+
+navigator.clipboard.writeText(text);
+
+alert("Link berhasil dicopy 🔥");
+
+}
+
+</script>
+
+
+</body>
+</html>
