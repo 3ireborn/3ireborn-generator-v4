@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Generator Istikmal Syariah V6 + QR</title>
+<title>Generator Istikmal Syariah V7 - Full Karir</title>
 
 <style>
 body{
@@ -17,7 +17,7 @@ body{
 .box{max-width:650px; margin:auto;}
 h1{text-align:center; color:#d4af37; margin-bottom:30px;}
 
-input, button{
+input, select, button{
     width:100%;
     padding:15px;
     margin:10px 0;
@@ -26,12 +26,7 @@ input, button{
     font-size:16px;
 }
 
-button{
-    font-weight:bold;
-    cursor:pointer;
-    font-size:17px;
-}
-
+button{font-weight:bold; cursor:pointer;}
 .upload-btn{background:#00cc99; color:white;}
 .generate-btn{background:#d4af37; color:#061b18; padding:18px;}
 
@@ -48,7 +43,6 @@ button{
     padding:14px;
     border-radius:8px;
     word-break:break-all;
-    font-size:15px;
     margin:12px 0;
 }
 
@@ -71,7 +65,7 @@ button{
 <body>
 
 <div class="box">
-    <h1>ISTIKMAL SYARIAH<br><span style="font-size:22px;">GENERATOR V6 + QR CODE</span></h1>
+    <h1>ISTIKMAL SYARIAH<br><span style="font-size:22px;">GENERATOR V7 - FULL KARIR</span></h1>
 
     <label>Nama Leader</label>
     <input id="nama" placeholder="Nama Lengkap">
@@ -82,44 +76,49 @@ button{
     <label>Slug Branding</label>
     <input id="slug" placeholder="NamaBrandAnda">
 
+    <label>Jenjang Karir</label>
+    <select id="jabatan">
+        <option value="Mitra 3IReborn">Mitra 3IReborn</option>
+        <option value="Team Entrepreneur">Team Entrepreneur</option>
+        <option value="Leader Entrepreneur">Leader Entrepreneur</option>
+        <option value="Bronze Entrepreneur">Bronze Entrepreneur</option>
+        <option value="Silver Entrepreneur" selected>Silver Entrepreneur</option>
+        <option value="Gold Entrepreneur">Gold Entrepreneur</option>
+        <option value="Diamond Executive">Diamond Executive</option>
+        <option value="Royal Executive">Royal Executive</option>
+        <option value="King Executive">King Executive</option>
+        <option value="Queen 3IReborn">Queen 3IReborn</option>
+    </select>
+
     <label>Link Foto Leader</label>
-    <button class="upload-btn" onclick="openUpload()">📸 Upload Foto (Postimages)</button>
+    <button class="upload-btn" onclick="openUpload()">📸 Upload Foto</button>
     <input id="foto" placeholder="Paste link foto di sini" style="margin-top:8px;">
 
     <button class="generate-btn" onclick="generate()">
-        🚀 GENERATE LINK + QR CODE
+        🚀 GENERATE SEMUA
     </button>
 
     <div class="result">
         <h3>🔗 LP MASTER</h3>
         <p id="master" class="link"></p>
-        <button onclick="copy('master')">📋 Copy Link</button>
-        <div class="qr-box">
-            <p>QR Code LP Master</p>
-            <img id="qrMaster" src="">
-        </div>
+        <button onclick="copy('master')">📋 Copy</button>
+        <div class="qr-box"><p>QR Code LP Master</p><img id="qrMaster" src=""></div>
 
         <h3>🔥 LP HOT</h3>
         <p id="hot" class="link"></p>
-        <button onclick="copy('hot')">📋 Copy Link</button>
-        <div class="qr-box">
-            <p>QR Code LP Hot</p>
-            <img id="qrHot" src="">
-        </div>
+        <button onclick="copy('hot')">📋 Copy</button>
+        <div class="qr-box"><p>QR Code LP Hot</p><img id="qrHot" src=""></div>
 
         <h3>📝 FORM PENDAFTARAN</h3>
         <p id="form" class="link"></p>
-        <button onclick="copy('form')">📋 Copy Link</button>
-        <div class="qr-box">
-            <p>QR Code Form Pendaftaran</p>
-            <img id="qrForm" src="">
-        </div>
+        <button onclick="copy('form')">📋 Copy</button>
+        <div class="qr-box"><p>QR Code Form</p><img id="qrForm" src=""></div>
     </div>
 </div>
 
 <script>
 function openUpload() {
-    alert("Buka di tab baru:\nhttps://postimages.org/\nUpload → Copy Direct Link");
+    alert("Buka https://postimages.org/ → Upload foto → Copy Direct Link");
     window.open('https://postimages.org/', '_blank');
 }
 
@@ -127,14 +126,16 @@ function generate(){
     const nama = document.getElementById("nama").value.trim();
     const wa = document.getElementById("wa").value.trim();
     const slug = document.getElementById("slug").value.trim();
+    const jabatan = document.getElementById("jabatan").value;
     const foto = document.getElementById("foto").value.trim();
 
     if (!nama || !wa || !slug || !foto) {
-        alert("❌ Harap isi semua kolom termasuk foto!");
+        alert("❌ Harap isi semua kolom!");
         return;
     }
 
-    const param = `?name=${encodeURIComponent(nama)}&wa=${wa}&slug=${encodeURIComponent(slug)}&foto=${encodeURIComponent(foto)}`;
+    const param = `?name=${encodeURIComponent(nama)}&wa=${wa}&slug=${encodeURIComponent(slug)}&foto=${encodeURIComponent(foto)}&jabatan=${encodeURIComponent(jabatan)}`;
+
     const domain = "https://3ireborn.github.io/3ireborn-generator-v4/";
 
     const masterLink = domain + "lp-master-v4.html" + param;
@@ -145,16 +146,15 @@ function generate(){
     document.getElementById("hot").innerText   = hotLink;
     document.getElementById("form").innerText  = formLink;
 
-    // Generate QR Code untuk ketiganya
-    document.getElementById("qrMaster").src = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(masterLink)}`;
-    document.getElementById("qrHot").src   = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(hotLink)}`;
-    document.getElementById("qrForm").src  = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(formLink)}`;
+    const qrBase = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=";
+    document.getElementById("qrMaster").src = qrBase + encodeURIComponent(masterLink);
+    document.getElementById("qrHot").src   = qrBase + encodeURIComponent(hotLink);
+    document.getElementById("qrForm").src  = qrBase + encodeURIComponent(formLink);
 }
 
 function copy(id){
-    const text = document.getElementById(id).innerText;
-    navigator.clipboard.writeText(text);
-    alert("✅ Link berhasil dicopy!");
+    navigator.clipboard.writeText(document.getElementById(id).innerText);
+    alert("✅ Berhasil dicopy!");
 }
 </script>
 
