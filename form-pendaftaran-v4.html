@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Form Pendaftaran Istikmal Syariah V4</title>
+
+<style>
+body{
+    margin:0;
+    padding:20px;
+    background:#012b24;
+    color:white;
+    font-family:Arial,sans-serif;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+}
+
+h1{
+    text-align:center;
+    color:#d4af37;
+}
+
+label{
+    display:block;
+    margin-top:15px;
+    margin-bottom:5px;
+}
+
+input,select{
+    width:100%;
+    padding:12px;
+    border-radius:10px;
+    border:none;
+    box-sizing:border-box;
+}
+
+button{
+    width:100%;
+    margin-top:20px;
+    padding:15px;
+    background:#d4af37;
+    color:black;
+    border:none;
+    border-radius:10px;
+    font-weight:bold;
+    font-size:18px;
+}
+
+.outbox{
+    margin-top:20px;
+    background:#083d35;
+    padding:15px;
+    border-radius:10px;
+    white-space:pre-wrap;
+}
+
+.copyBtn{
+    display:block;
+    text-align:center;
+    margin-top:10px;
+    padding:15px;
+    background:#00b894;
+    color:white;
+    text-decoration:none;
+    border-radius:10px;
+    font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>FORM PENDAFTARAN ISTIKMAL SYARIAH</h1>
+
+<label>Nama Lengkap</label>
+<input id="nama">
+
+<label>No WhatsApp</label>
+<input id="hp">
+
+<label>Kota</label>
+<input id="kota">
+
+<label>Nama Ibu Kandung</label>
+<input id="ibu">
+
+<label>Pilihan Premi</label>
+<select id="premi">
+<option>Rp500.000</option>
+<option>Rp700.000</option>
+<option>Rp1.000.000</option>
+<option>Rp2.000.000</option>
+</select>
+
+<button onclick="generateData()">
+GENERATE DATA PENDAFTARAN
+</button>
+
+<div id="out" class="outbox"></div>
+
+<button onclick="copyData()">
+COPY DATA
+</button>
+
+</div>
+
+<script>
+
+const params =
+new URLSearchParams(window.location.search);
+
+const leader =
+params.get("name") || "Leader";
+
+const slug =
+params.get("slug") || "-";
+
+function generateData(){
+
+const msg = `
+
+*FORM PENDAFTARAN ISTIKMAL SYARIAH*
+
+Nama : ${document.getElementById('nama').value}
+
+No HP : ${document.getElementById('hp').value}
+
+Kota : ${document.getElementById('kota').value}
+
+Nama Ibu Kandung : ${document.getElementById('ibu').value}
+
+Pilihan Premi : ${document.getElementById('premi').value}
+
+Dibimbing Oleh : ${leader}
+
+Referral : ${slug}
+
+`;
+
+document.getElementById("out").textContent = msg;
+
+}
+
+function copyData(){
+
+const teks =
+document.getElementById("out").textContent;
+
+navigator.clipboard.writeText(teks);
+
+alert("Data berhasil dicopy");
+
+}
+
+</script>
+
+</body>
+</html>
