@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Istikmal Syariah - Mulai Dari Sekarang</title>
+
+<style>
+body{
+    margin:0;
+    padding:20px;
+    font-family:Arial,sans-serif;
+    background:#012b24;
+    color:white;
+    text-align:center;
+}
+
+.container{
+    max-width:600px;
+    margin:auto;
+}
+
+h1{
+    color:#d4af37;
+    font-size:42px;
+    margin-top:30px;
+}
+
+h2{
+    font-size:34px;
+    margin-top:20px;
+}
+
+.card{
+    background:#083d35;
+    padding:25px;
+    border-radius:20px;
+    margin-top:30px;
+}
+
+.point{
+    text-align:left;
+    font-size:20px;
+    line-height:1.8;
+}
+
+.btn{
+    display:block;
+    background:#d4af37;
+    color:#000;
+    text-decoration:none;
+    padding:18px;
+    border-radius:12px;
+    margin-top:25px;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.footer{
+    margin-top:40px;
+    opacity:.8;
+    font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>ISTIKMAL SYARIAH</h1>
+
+<h2>
+Kenapa Harus<br>
+Mulai Sekarang?
+</h2>
+
+<div class="card">
+
+<div class="point">
+❌ Biaya Umroh terus naik<br>
+❌ Menunggu kaya belum tentu berangkat<br>
+❌ Menunggu pensiun belum tentu sehat<br><br>
+
+✅ Mulai dari Rp350.000/bulan<br>
+✅ Sisihkan Bukan Sisakan<br>
+✅ Dibimbing sampai siap berangkat
+</div>
+
+<br>
+
+<h3 id="leader">
+Dibimbing oleh:
+</h3>
+
+<a id="waBtn" class="btn">
+KONSULTASI SEKARANG
+</a>
+
+</div>
+
+<div class="footer">
+Istikmal Syariah V4
+</div>
+
+</div>
+
+<script>
+
+const params =
+new URLSearchParams(window.location.search);
+
+const nama =
+params.get("name") || "Leader";
+
+const wa =
+params.get("wa") || "";
+
+document.getElementById("leader").innerHTML =
+"Dibimbing oleh:<br>" + nama;
+
+const pesan =
+"Halo " + nama +
+", saya ingin informasi program Istikmal Syariah.";
+
+document.getElementById("waBtn").href =
+"https://wa.me/" +
+wa +
+"?text=" +
+encodeURIComponent(pesan);
+
+</script>
+
+</body>
+</html>
