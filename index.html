@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Generator Istikmal Syariah V6 - Super Simpel</title>
+<title>Generator Istikmal Syariah V6 + QR</title>
 
 <style>
 body{
@@ -51,13 +51,27 @@ button{
     font-size:15px;
     margin:12px 0;
 }
+
+.qr-box{
+    text-align:center;
+    margin:15px 0;
+    padding:10px;
+    background:#0a1f1b;
+    border-radius:10px;
+}
+
+.qr-box img{
+    max-width:200px;
+    border:3px solid #d4af37;
+    border-radius:10px;
+}
 </style>
 </head>
 
 <body>
 
 <div class="box">
-    <h1>ISTIKMAL SYARIAH<br><span style="font-size:22px;">GENERATOR SUPER SIMPEL V6</span></h1>
+    <h1>ISTIKMAL SYARIAH<br><span style="font-size:22px;">GENERATOR V6 + QR CODE</span></h1>
 
     <label>Nama Leader</label>
     <input id="nama" placeholder="Nama Lengkap">
@@ -69,31 +83,43 @@ button{
     <input id="slug" placeholder="NamaBrandAnda">
 
     <label>Link Foto Leader</label>
-    <button class="upload-btn" onclick="openUpload()">📸 Upload Foto Sekarang</button>
+    <button class="upload-btn" onclick="openUpload()">📸 Upload Foto (Postimages)</button>
     <input id="foto" placeholder="Paste link foto di sini" style="margin-top:8px;">
 
     <button class="generate-btn" onclick="generate()">
-        🚀 GENERATE SEMUA LINK
+        🚀 GENERATE LINK + QR CODE
     </button>
 
     <div class="result">
         <h3>🔗 LP MASTER</h3>
         <p id="master" class="link"></p>
-        <button onclick="copy('master')">📋 Copy LP Master</button>
+        <button onclick="copy('master')">📋 Copy Link</button>
+        <div class="qr-box">
+            <p>QR Code LP Master</p>
+            <img id="qrMaster" src="">
+        </div>
 
         <h3>🔥 LP HOT</h3>
         <p id="hot" class="link"></p>
-        <button onclick="copy('hot')">📋 Copy LP Hot</button>
+        <button onclick="copy('hot')">📋 Copy Link</button>
+        <div class="qr-box">
+            <p>QR Code LP Hot</p>
+            <img id="qrHot" src="">
+        </div>
 
         <h3>📝 FORM PENDAFTARAN</h3>
         <p id="form" class="link"></p>
-        <button onclick="copy('form')">📋 Copy Form</button>
+        <button onclick="copy('form')">📋 Copy Link</button>
+        <div class="qr-box">
+            <p>QR Code Form Pendaftaran</p>
+            <img id="qrForm" src="">
+        </div>
     </div>
 </div>
 
 <script>
 function openUpload() {
-    alert("1. Buka link ini\n2. Upload foto\n3. Copy 'Direct Link'\n4. Paste di kolom atas");
+    alert("Buka di tab baru:\nhttps://postimages.org/\nUpload → Copy Direct Link");
     window.open('https://postimages.org/', '_blank');
 }
 
@@ -104,16 +130,25 @@ function generate(){
     const foto = document.getElementById("foto").value.trim();
 
     if (!nama || !wa || !slug || !foto) {
-        alert("❌ Harap isi semua kolom ya!");
+        alert("❌ Harap isi semua kolom termasuk foto!");
         return;
     }
 
     const param = `?name=${encodeURIComponent(nama)}&wa=${wa}&slug=${encodeURIComponent(slug)}&foto=${encodeURIComponent(foto)}`;
     const domain = "https://3ireborn.github.io/3ireborn-generator-v4/";
 
-    document.getElementById("master").innerText = domain + "lp-master-v4.html" + param;
-    document.getElementById("hot").innerText   = domain + "lp-hot-v4.html" + param;
-    document.getElementById("form").innerText  = domain + "form-pendaftaran-v4.html" + param;
+    const masterLink = domain + "lp-master-v4.html" + param;
+    const hotLink   = domain + "lp-hot-v4.html" + param;
+    const formLink  = domain + "form-pendaftaran-v4.html" + param;
+
+    document.getElementById("master").innerText = masterLink;
+    document.getElementById("hot").innerText   = hotLink;
+    document.getElementById("form").innerText  = formLink;
+
+    // Generate QR Code untuk ketiganya
+    document.getElementById("qrMaster").src = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(masterLink)}`;
+    document.getElementById("qrHot").src   = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(hotLink)}`;
+    document.getElementById("qrForm").src  = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(formLink)}`;
 }
 
 function copy(id){
