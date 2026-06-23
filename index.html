@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Generator Istikmal Syariah V5</title>
+<title>Generator Istikmal Syariah V5.1</title>
 
 <style>
 body{
@@ -24,7 +24,7 @@ h1{
     color:#d4af37;
 }
 
-input, textarea, button{
+input, button{
     width:100%;
     padding:14px;
     margin:8px 0;
@@ -34,7 +34,6 @@ input, textarea, button{
 }
 
 button{
-    background:#d4af37;
     font-weight:bold;
     cursor:pointer;
 }
@@ -42,7 +41,6 @@ button{
 .upload-btn{
     background:#00cc99;
     color:white;
-    margin-bottom:15px;
 }
 
 .result{
@@ -50,7 +48,6 @@ button{
     padding:20px;
     border-radius:12px;
     margin-top:25px;
-    word-wrap:break-word;
 }
 
 .link{
@@ -61,11 +58,12 @@ button{
     display:block;
     margin:10px 0;
     font-size:15px;
+    word-break:break-all;
 }
 
 .preview{
     max-width:100%;
-    max-height:200px;
+    max-height:220px;
     margin:10px 0;
     border-radius:10px;
     border:2px solid #d4af37;
@@ -76,7 +74,7 @@ button{
 <body>
 
 <div class="box">
-    <h1>ISTIKMAL SYARIAH<br>GENERATOR V5</h1>
+    <h1>ISTIKMAL SYARIAH<br>GENERATOR V5.1</h1>
 
     <label>Nama Leader</label>
     <input id="nama" placeholder="Contoh: Sugiarto Kurniawan">
@@ -96,7 +94,7 @@ button{
     <img id="preview" class="preview" style="display:none;">
     <input id="foto" placeholder="Link foto akan muncul otomatis" readonly>
 
-    <button onclick="generate()" style="margin-top:20px;">
+    <button onclick="generate()" style="margin-top:20px; background:#d4af37;">
         🚀 GENERATE LINK
     </button>
 
@@ -116,22 +114,23 @@ button{
 </div>
 
 <script>
-// Upload foto ke Imgbb
-async function uploadToImgbb(file) {
+// Upload ke Catbox.moe (lebih stabil)
+async function uploadToCatbox(file) {
     const formData = new FormData();
-    formData.append('image', file);
+    formData.append('reqtype', 'fileupload');
+    formData.append('fileToUpload', file);
 
     try {
-        const res = await fetch('https://api.imgbb.com/1/upload?key=1c8e4d7e0e0e0e0e0e0e0e0e0e0e0e0e', {
+        const res = await fetch('https://catbox.moe/user/api.php', {
             method: 'POST',
             body: formData
         });
-        const data = await res.json();
+        const link = await res.text();
         
-        if (data.status === 200) {
-            return data.data.url;
+        if (link.startsWith('https')) {
+            return link;
         } else {
-            alert("Gagal upload foto");
+            alert("Gagal upload ke server");
             return null;
         }
     } catch (e) {
@@ -150,9 +149,10 @@ document.getElementById('fotoUpload').addEventListener('change', async function(
     preview.style.display = 'block';
 
     // Upload
-    const link = await uploadToImgbb(file);
+    const link = await uploadToCatbox(file);
     if (link) {
         document.getElementById('foto').value = link;
+        alert("✅ Foto berhasil diupload!");
     }
 });
 
@@ -163,7 +163,7 @@ function generate(){
     let foto = document.getElementById("foto").value.trim();
 
     if (!nama || !wa || !slug || !foto) {
-        alert("Mohon isi semua field dan upload foto!");
+        alert("❌ Mohon isi semua field dan upload foto terlebih dahulu!");
         return;
     }
 
@@ -181,8 +181,9 @@ function generate(){
 
 function copy(id){
     let text = document.getElementById(id).innerText;
-    navigator.clipboard.writeText(text);
-    alert("✅ Link berhasil dicopy!");
+    navigator.clipboard.writeText(text).then(() => {
+        alert("✅ Link berhasil dicopy!");
+    });
 }
 </script>
 
