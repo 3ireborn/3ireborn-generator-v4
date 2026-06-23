@@ -143,12 +143,13 @@ const leader = params.get("name") || "Leader";
 const wa = params.get("wa") || "";
 const slug = params.get("slug") || "-";
 const foto = params.get("foto") || "";
+const jabatan = params.get("jabatan") || "Konsultan Istikmal Syariah";
 
- // Tampilkan Foto Leader
+// Tampilkan Foto Leader
 if (foto) {
     document.getElementById("leaderPhoto").src = foto;
 } else {
-    document.getElementById("leaderPhoto").src = "https://i.postimg.cc/0jKzY8ZJ/default-leader.jpg"; // ganti kalau mau default lain
+    document.getElementById("leaderPhoto").src = "https://i.postimg.cc/0jKzY8ZJ/default-leader.jpg";
 }
 
 function generateData(){
@@ -168,6 +169,7 @@ Nama Ibu Kandung : ${ibu}
 Pilihan Premi : ${premi}
 
 Dibimbing Oleh : ${leader}
+Jabatan : ${jabatan}
 Referral : ${slug}
     `;
 
