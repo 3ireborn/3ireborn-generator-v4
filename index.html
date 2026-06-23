@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Generator Istikmal Syariah V5.1</title>
+<title>Generator Istikmal Syariah V5.3</title>
 
 <style>
 body{
@@ -14,15 +14,8 @@ body{
     padding:20px;
 }
 
-.box{
-    max-width:650px;
-    margin:auto;
-}
-
-h1{
-    text-align:center;
-    color:#d4af37;
-}
+.box{max-width:650px; margin:auto;}
+h1{text-align:center; color:#d4af37;}
 
 input, button{
     width:100%;
@@ -33,15 +26,9 @@ input, button{
     font-size:16px;
 }
 
-button{
-    font-weight:bold;
-    cursor:pointer;
-}
-
-.upload-btn{
-    background:#00cc99;
-    color:white;
-}
+button{font-weight:bold; cursor:pointer;}
+.upload-btn{background:#00cc99; color:white;}
+.paste-btn{background:#d4af37; color:#061b18;}
 
 .result{
     background:#102d28;
@@ -57,7 +44,6 @@ button{
     border-radius:8px;
     display:block;
     margin:10px 0;
-    font-size:15px;
     word-break:break-all;
 }
 
@@ -74,7 +60,7 @@ button{
 <body>
 
 <div class="box">
-    <h1>ISTIKMAL SYARIAH<br>GENERATOR V5.1</h1>
+    <h1>ISTIKMAL SYARIAH<br>GENERATOR V5.3</h1>
 
     <label>Nama Leader</label>
     <input id="nama" placeholder="Contoh: Sugiarto Kurniawan">
@@ -85,14 +71,9 @@ button{
     <label>Slug Branding</label>
     <input id="slug" placeholder="NganggurAjaBisa">
 
-    <label>Upload Foto Leader</label>
-    <input type="file" id="fotoUpload" accept="image/*" style="display:none;">
-    <button class="upload-btn" onclick="document.getElementById('fotoUpload').click()">
-        📸 Upload Foto Leader
-    </button>
-    
-    <img id="preview" class="preview" style="display:none;">
-    <input id="foto" placeholder="Link foto akan muncul otomatis" readonly>
+    <label>Link Foto Leader</label>
+    <button class="upload-btn" onclick="openUploadSite()">📸 Buka Situs Upload Foto</button>
+    <input id="foto" placeholder="Paste link foto di sini[](https://...jpg)" style="margin-top:5px;">
 
     <button onclick="generate()" style="margin-top:20px; background:#d4af37;">
         🚀 GENERATE LINK
@@ -114,47 +95,10 @@ button{
 </div>
 
 <script>
-// Upload ke Catbox.moe (lebih stabil)
-async function uploadToCatbox(file) {
-    const formData = new FormData();
-    formData.append('reqtype', 'fileupload');
-    formData.append('fileToUpload', file);
-
-    try {
-        const res = await fetch('https://catbox.moe/user/api.php', {
-            method: 'POST',
-            body: formData
-        });
-        const link = await res.text();
-        
-        if (link.startsWith('https')) {
-            return link;
-        } else {
-            alert("Gagal upload ke server");
-            return null;
-        }
-    } catch (e) {
-        alert("Error upload: " + e.message);
-        return null;
-    }
+function openUploadSite() {
+    alert("✅ Buka link ini di tab baru:\n\nhttps://postimages.org/\n\n1. Pilih foto\n2. Klik Upload\n3. Copy link 'Direct Link'\n4. Paste di kolom atas");
+    window.open('https://postimages.org/', '_blank');
 }
-
-document.getElementById('fotoUpload').addEventListener('change', async function(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    // Preview
-    const preview = document.getElementById('preview');
-    preview.src = URL.createObjectURL(file);
-    preview.style.display = 'block';
-
-    // Upload
-    const link = await uploadToCatbox(file);
-    if (link) {
-        document.getElementById('foto').value = link;
-        alert("✅ Foto berhasil diupload!");
-    }
-});
 
 function generate(){
     let nama = document.getElementById("nama").value.trim();
@@ -163,7 +107,7 @@ function generate(){
     let foto = document.getElementById("foto").value.trim();
 
     if (!nama || !wa || !slug || !foto) {
-        alert("❌ Mohon isi semua field dan upload foto terlebih dahulu!");
+        alert("❌ Mohon isi semua field termasuk link foto!");
         return;
     }
 
