@@ -109,6 +109,10 @@ GENERATE DATA PENDAFTARAN
 COPY DATA
 </button>
 
+    <a id="waBtn" class="copyBtn">
+💬 HUBUNGI LEADER
+    </a>
+    
 </div>
 
 <script>
@@ -118,6 +122,9 @@ new URLSearchParams(window.location.search);
 
 const leader =
 params.get("name") || "Leader";
+
+const wa =
+params.get("wa") || "";
 
 const slug =
 params.get("slug") || "-";
@@ -159,6 +166,9 @@ alert("Data berhasil dicopy");
 
 }
 
+    document.getElementById("waBtn").href =
+"https://wa.me/" + wa;
+    
 </script>
 
 </body>
