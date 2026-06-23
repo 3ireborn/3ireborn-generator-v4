@@ -102,4 +102,57 @@ Mulai Sekarang?
 <div class="point">
 ❌ Biaya Umroh terus naik<br>
 ❌ Menunggu kaya belum tentu berangkat<br>
-❌ Menunggu pensiun
+❌ Menunggu pensiun belum tentu sehat<br><br>
+
+✅ Mulai dari Rp500.000/bulan<br>
+✅ Sisihkan Bukan Sisakan<br>
+✅ Dibimbing sampai siap berangkat
+</div>
+
+<br>
+
+<h3 id="leader">Dibimbing oleh:</h3>
+
+<a id="waBtn" class="btn">
+KONSULTASI SEKARANG
+</a>
+
+</div>
+
+<div class="footer">
+Istikmal Syariah V4
+</div>
+
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+
+const nama = params.get("name") || "Leader";
+const wa = params.get("wa") || "";
+const foto = params.get("foto") || "";
+const jabatan = params.get("jabatan") || "Konsultan Istikmal Syariah";
+
+// Foto Leader
+const photoEl = document.getElementById("leaderPhoto");
+if (foto) {
+    photoEl.src = foto;
+} else {
+    photoEl.src = "https://i.postimg.cc/0jKzY8ZJ/default-leader.jpg";
+}
+
+// Nama + Jabatan
+document.getElementById("leader").innerHTML = `
+    Dibimbing oleh:<br>
+    <strong>${nama}</strong><br>
+    ${jabatan}
+`;
+
+const pesan = "Halo " + nama + ", saya ingin informasi program Istikmal Syariah.";
+
+document.getElementById("waBtn").href = 
+    "https://wa.me/" + wa + "?text=" + encodeURIComponent(pesan);
+</script>
+
+</body>
+</html>
