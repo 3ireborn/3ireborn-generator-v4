@@ -152,7 +152,9 @@ Referral : ${slug}
 `;
 
 document.getElementById("out").textContent = msg;
-
+document.getElementById("waBtn").href =
+"https://wa.me/" + wa +
+"?text=" + encodeURIComponent(msg);
 }
 
 function copyData(){
