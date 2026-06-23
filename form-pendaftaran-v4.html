@@ -25,6 +25,22 @@ h1{
     color:#d4af37;
 }
 
+.photo-container {
+    margin: 20px auto;
+    width: 180px;
+    height: 180px;
+    border: 6px solid #d4af37;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+}
+
+.photo-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 label{
     display:block;
     margin-top:15px;
@@ -79,6 +95,11 @@ button{
 
 <h1>FORM PENDAFTARAN ISTIKMAL SYARIAH</h1>
 
+<!-- FOTO LEADER -->
+<div class="photo-container">
+    <img id="leaderPhoto" src="" alt="Leader">
+</div>
+
 <label>Nama Lengkap</label>
 <input id="nama">
 
@@ -109,68 +130,61 @@ GENERATE DATA PENDAFTARAN
 COPY DATA
 </button>
 
-    <a id="waBtn" class="copyBtn" target="_blank">
+<a id="waBtn" class="copyBtn" target="_blank">
 💬 KIRIM DATA KE LEADER
-    </a>
+</a>
     
 </div>
 
 <script>
+const params = new URLSearchParams(window.location.search);
 
-const params =
-new URLSearchParams(window.location.search);
+const leader = params.get("name") || "Leader";
+const wa = params.get("wa") || "";
+const slug = params.get("slug") || "-";
+const foto = params.get("foto") || "";
 
-const leader =
-params.get("name") || "Leader";
-
-const wa =
-params.get("wa") || "";
-
-const slug =
-params.get("slug") || "-";
+ // Tampilkan Foto Leader
+if (foto) {
+    document.getElementById("leaderPhoto").src = foto;
+} else {
+    document.getElementById("leaderPhoto").src = "https://i.postimg.cc/0jKzY8ZJ/default-leader.jpg"; // ganti kalau mau default lain
+}
 
 function generateData(){
+    const namaPendaftar = document.getElementById('nama').value || "-";
+    const hp = document.getElementById('hp').value || "-";
+    const kota = document.getElementById('kota').value || "-";
+    const ibu = document.getElementById('ibu').value || "-";
+    const premi = document.getElementById('premi').value;
 
-const msg = `
-
+    const msg = `
 *FORM PENDAFTARAN ISTIKMAL SYARIAH*
 
-Nama : ${document.getElementById('nama').value}
-
-No HP : ${document.getElementById('hp').value}
-
-Kota : ${document.getElementById('kota').value}
-
-Nama Ibu Kandung : ${document.getElementById('ibu').value}
-
-Pilihan Premi : ${document.getElementById('premi').value}
+Nama : ${namaPendaftar}
+No HP : ${hp}
+Kota : ${kota}
+Nama Ibu Kandung : ${ibu}
+Pilihan Premi : ${premi}
 
 Dibimbing Oleh : ${leader}
-
 Referral : ${slug}
+    `;
 
-`;
-
-document.getElementById("out").textContent = msg;
-document.getElementById("waBtn").href =
-"https://wa.me/" + wa +
-"?text=" + encodeURIComponent(msg);
+    document.getElementById("out").textContent = msg;
+    
+    document.getElementById("waBtn").href =
+        "https://wa.me/" + wa + "?text=" + encodeURIComponent(msg);
 }
 
 function copyData(){
-
-const teks =
-document.getElementById("out").textContent;
-
-navigator.clipboard.writeText(teks);
-
-alert("Data berhasil dicopy");
-
+    const teks = document.getElementById("out").textContent;
+    navigator.clipboard.writeText(teks);
+    alert("✅ Data berhasil dicopy!");
 }
 
-    document.getElementById("waBtn").href =
-"https://wa.me/" + wa;
-    
+// Default WA Button
+document.getElementById("waBtn").href = "https://wa.me/" + wa;
 </script>
 
 </body>
